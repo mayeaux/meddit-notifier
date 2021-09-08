@@ -9,6 +9,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "moment": "^2.29.1",
     "node-notifier": "^10.0.0",
+    "suncalc": "^1.8.0"
   }
 }
