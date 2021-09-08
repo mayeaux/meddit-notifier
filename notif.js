@@ -1,9 +1,8 @@
 const notifier = require('node-notifier');
-const open = require('open');
 const { exec } = require('child_process');
 
 function sendNotifications(){
-// Object
+  // notify using node-notifier
   notifier.notify({
 
     /** presentational code **/
@@ -29,23 +28,22 @@ function sendNotifications(){
     // when it feels more like a natural open button to me (I want to maximize affirmative not negative)
     if(res === 'closed'){
       exec('open https://meddit.app/meditations?orderBy=rating')
-
-      // open node library, doesn't work for me
-      // open('https://meddit.app', { url: true });
     }
 
-    console.log(err, res, metadata)
+    console.log(err)
+    console.log(res);
+    console.log(metadata);
 
   });
 }
 
+// send one off right when boot
 console.log('sending a notif')
 sendNotifications()
+
+// send a new notif every 5 minutes
 setInterval(function(){
   console.log('sending a notif')
-
   sendNotifications()
 }, 1000 * 60 * 5)
-
-// where's there's a timeout they do a _______
 
