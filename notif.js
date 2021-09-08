@@ -2,27 +2,35 @@ const notifier = require('node-notifier');
 const open = require('open');
 const { exec } = require('child_process');
 
-// String
-// notifier.notify('Message');
-
 function sendNotifications(){
 // Object
   notifier.notify({
+
+    /** presentational code **/
+    // top bar
     title: 'Please do a quick mindfulness video!',
-    // subtitle: "hello! hello! hello! hello! hello! hello! hello! hello! hello! hello! hello! hello! hello! hello! hello!",
+    // notif text
     message: 'Mindfulness 🧘 increases positive emotion 😁 and decreases autopilot mode 🛩 Do it you\'ll love it! 🤑',
-    timeout: 5,
-    open: 'https://meddit.app/meditations?orderBy=rating',
+    // top button (actually a close button but used for opening)
     actions: 'Absolutely can\'t',
+    // bottom button (we will use it to open)
     closeLabel: 'Let\'s do it',
-    dropdownLabel: 'Hello',
+
+    /** how long to display notif **/
     wait: true,
-    // contentImage: '/Users/anthony/Development/notif/favicon.png',
-    // icon: '/Users/anthony/Development/notif/favicon.png',
+    timeout: 295,
+
+    // link to open when main notif body is clicked
+    open: 'https://meddit.app/meditations?orderBy=rating',
+
   }, async function(err, res, metadata){
 
+    // if top button is clicked. For some reason Apple maps this as 'closing'
+    // when it feels more like a natural open button to me (I want to maximize affirmative not negative)
     if(res === 'closed'){
       exec('open https://meddit.app/meditations?orderBy=rating')
+
+      // open node library, doesn't work for me
       // open('https://meddit.app', { url: true });
     }
 
@@ -30,10 +38,14 @@ function sendNotifications(){
 
   });
 }
+
 console.log('sending a notif')
 sendNotifications()
 setInterval(function(){
   console.log('sending a notif')
+
   sendNotifications()
 }, 1000 * 60 * 5)
+
+// where's there's a timeout they do a _______
 
